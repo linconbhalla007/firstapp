@@ -1,13 +1,13 @@
+import "./App.css";
 
-import './App.css';
-import Classcomponent from './Classcomponent';
-import MyFunctionComponent from './FunctionComponent';
+import Classcomponent from "./Classcomponent";
+
+import MyFunctionComponent from "./FunctionComponent";
 
 function App() {
   return (
     <div className="App">
-     <Classcomponent></Classcomponent>
-     <MyFunctionComponent></MyFunctionComponent>
+      <Classcomponent></Classcomponent>
     </div>
   );
 }
