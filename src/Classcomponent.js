@@ -10,10 +10,15 @@ class Classcomponent extends Component {
     };
   }
   incrementCount = () => {
-    console.log("inside increment");
+    console.log("increment event");
     this.setState((prvState) => {
       return { count: prvState.count + 1 };
     });
+  };
+
+  handleNameChange = (event) => {
+    console.log("Name change event");
+    this.setState({ name: event.target.value });
   };
 
   render() {
@@ -22,8 +27,17 @@ class Classcomponent extends Component {
       <div>
         <h1>This is Class component </h1>
         <p>Count: {this.state.count}</p>
+        <input
+          type="text"
+          placeholder="Enter yor name"
+          value={this.state.name}
+          onChange={this.handleNameChange}
+        ></input>
 
-        <MyFunctionComponent click={this.incrementCount}></MyFunctionComponent>
+        <MyFunctionComponent
+          click={this.incrementCount}
+          name={this.state.name}
+        ></MyFunctionComponent>
       </div>
     );
   }
