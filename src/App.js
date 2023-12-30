@@ -10,6 +10,7 @@ import MyAppBar from "./hader/MyAppBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import MyAccount from "./components/MyAccount";
+import Employee from "./components/Employee";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               element={<MyFunctionComponent></MyFunctionComponent>}
             ></Route>
             <Route path="/todo" element={<TODOList></TODOList>}></Route>
+            <Route path="/employee" element={<Employee></Employee>}></Route>
           </Routes>
         </div>
       </div>

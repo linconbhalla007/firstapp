@@ -103,7 +103,10 @@ export default function MyAppBar() {
                   {" "}
                   <Link to="/todo">To Do List Application</Link>
                 </MenuItem>
-                <MenuItem onClick={handleClose}></MenuItem>
+                <MenuItem onClick={handleClose}>
+                  {" "}
+                  <Link to="/employee">Employee Management Application</Link>
+                </MenuItem>
               </Menu>
             </div>
           )}
