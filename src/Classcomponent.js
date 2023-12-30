@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import MyFunctionComponent from "./FunctionComponent";
+import { TextField } from "@mui/material";
 
 class Classcomponent extends Component {
   constructor(props) {
@@ -27,12 +28,13 @@ class Classcomponent extends Component {
       <div>
         <h1>This is Class component </h1>
         <p>Count: {this.state.count}</p>
-        <input
-          type="text"
-          placeholder="Enter yor name"
+        <TextField
+          id="outlined-basic"
+          label="Name "
+          variant="standard"
           value={this.state.name}
           onChange={this.handleNameChange}
-        ></input>
+        />
 
         <MyFunctionComponent
           click={this.incrementCount}
