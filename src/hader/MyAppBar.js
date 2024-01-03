@@ -86,6 +86,9 @@ export default function MyAppBar() {
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>
+                  <Link to="/signIn">SignIn</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
                   <Link to="/">Home</Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
