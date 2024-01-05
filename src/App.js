@@ -11,8 +11,13 @@ import {
 import Navigation from "./hader/Navigation";
 
 function App() {
+  const loginCred = () => {
+    localStorage.setItem("userName", "Test@123");
+    localStorage.setItem("password", "123456");
+  };
   return (
     <Router>
+      {loginCred()}
       <Navigation></Navigation>
     </Router>
   );

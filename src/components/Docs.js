@@ -18,3 +18,5 @@ export default function Docs() {
 //https://github.com/mui/material-ui/tree/v5.15.2/docs/data/material/getting-started/templates/sign-in  (This is fpr pre buid themes)
 
 //npm install @fontsource/roboto  (this is for custom fonts)
+
+//https://jsonplaceholder.typicode.com/  (for API Calling)

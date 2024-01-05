@@ -15,6 +15,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Receipt } from "@mui/icons-material";
 import App from "../App";
 import Classcomponent from "../Classcomponent";
+// import Navigation from "../hader/Navigation";
+
+// import { withRouter } from "react-router-dom";
 //import { testFont } from "@fontsource/roboto/700.css";
 //fontFamily={testFont}
 
@@ -40,10 +43,11 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function SignIn({ history }) {
   const [isLogin, setLogin] = useState(false);
 
   const handleSubmit = (event) => {
+    localStorage.setItem("login", "true");
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
@@ -57,6 +61,7 @@ export default function SignIn() {
     console.log("Store Data: " + storUserName + storPassword);
 
     if (data.get("email") === storUserName) {
+      //   window.location.href = "/";
       setLogin(true);
       console.log("Log in successfully");
     } else {
@@ -67,7 +72,7 @@ export default function SignIn() {
   return (
     <>
       {isLogin === true ? (
-        <Classcomponent></Classcomponent>
+        <App></App>
       ) : (
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">

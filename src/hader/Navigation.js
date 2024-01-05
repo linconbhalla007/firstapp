@@ -14,6 +14,7 @@ import Home from "../components/Home";
 import MyAccount from "../components/MyAccount";
 import Employee from "../components/Employee";
 import SignIn from "../authentication/SignIn";
+import APICalling from "../service/APICalling";
 
 export default function Navigation() {
   const location = useLocation();
@@ -31,6 +32,7 @@ export default function Navigation() {
           }}
         >
           <Routes>
+            <Route path="/api" element={<APICalling></APICalling>}></Route>
             <Route index element={<Home></Home>}></Route>
             <Route path="/signIn" element={<SignIn></SignIn>}></Route>
             <Route path="/myaccount" element={<MyAccount></MyAccount>}></Route>

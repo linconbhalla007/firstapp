@@ -89,6 +89,9 @@ export default function MyAppBar() {
                   <Link to="/signIn">SignIn</Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
+                  <Link to="/api">API Component</Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
                   <Link to="/">Home</Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
