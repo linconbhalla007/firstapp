@@ -12,9 +12,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Receipt } from "@mui/icons-material";
+import { Receipt, X } from "@mui/icons-material";
 import App from "../App";
 import Classcomponent from "../Classcomponent";
+import Navigation from "../hader/Navigation";
 // import Navigation from "../hader/Navigation";
 
 // import { withRouter } from "react-router-dom";
@@ -61,9 +62,11 @@ export default function SignIn({ history }) {
     console.log("Store Data: " + storUserName + storPassword);
 
     if (data.get("email") === storUserName) {
-      //   window.location.href = "/";
+      window.location.replace(window.location.origin);
       setLogin(true);
+      localStorage.setItem("login", "done");
       console.log("Log in successfully");
+      //   window.location.reload();
     } else {
       console.log("Wrong Credintial ");
     }
@@ -72,7 +75,7 @@ export default function SignIn({ history }) {
   return (
     <>
       {isLogin === true ? (
-        <App></App>
+        <Navigation></Navigation>
       ) : (
         <ThemeProvider theme={defaultTheme}>
           <Container component="main" maxWidth="xs">

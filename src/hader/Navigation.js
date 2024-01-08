@@ -19,10 +19,16 @@ import APICalling from "../service/APICalling";
 export default function Navigation() {
   const location = useLocation();
   console.log("Current Location :" + location.pathname);
+  const loginStatus = localStorage.getItem("login");
+  console.log("LOGIN STATUS-----" + loginStatus);
   return (
     <div>
       <div>
-        {location.pathname === "/signIn" ? <></> : <MyAppBar></MyAppBar>}
+        {location.pathname === "/signIn" ? (
+          <></>
+        ) : (
+          <MyAppBar loginStatus={loginStatus}></MyAppBar>
+        )}
 
         <div
           style={{

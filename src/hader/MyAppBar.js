@@ -14,9 +14,14 @@ import Menu from "@mui/material/Menu";
 
 import { Outlet, Link } from "react-router-dom";
 
-export default function MyAppBar() {
-  const [auth, setAuth] = React.useState(true);
+export default function MyAppBar(props) {
+  const [auth, setAuth] = React.useState("" + props.loginStatus);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  console.log("LOGIN STATUS- PROPSSS----" + auth);
+
+  //   React.useEffect(() => {
+  //     setAuth(props.loginStatus);
+  //   }, [props.loginStatus]);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -32,7 +37,7 @@ export default function MyAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <FormGroup>
+      {/* <FormGroup>
         <FormControlLabel
           control={
             <Switch
@@ -43,7 +48,7 @@ export default function MyAppBar() {
           }
           label={auth ? "Logout" : "Login"}
         />
-      </FormGroup>
+      </FormGroup> */}
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -59,7 +64,7 @@ export default function MyAppBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Photos
           </Typography>
-          {auth && (
+          {auth === "done" ? (
             <div>
               <IconButton
                 size="large"
@@ -70,52 +75,58 @@ export default function MyAppBar() {
               >
                 <AccountCircle />
               </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>
-                  <Link to="/signIn">SignIn</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/api">API Component</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/">Home</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/myaccount">My account</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/classComponent">Class Component Example</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Link to="/functionCompnent">
-                    Functional Component Example
-                  </Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  {" "}
-                  <Link to="/todo">To Do List Application</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  {" "}
-                  <Link to="/employee">Employee Management Application</Link>
-                </MenuItem>
-              </Menu>
             </div>
+          ) : (
+            <></>
           )}
+
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {auth === "done" ? (
+              <></>
+            ) : (
+              <MenuItem onClick={handleClose}>
+                <Link to="/signIn">SignIn</Link>
+              </MenuItem>
+            )}
+
+            <MenuItem onClick={handleClose}>
+              <Link to="/api">API Component</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/">Home</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/myaccount">My account</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/classComponent">Class Component Example</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Link to="/functionCompnent">Functional Component Example</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              {" "}
+              <Link to="/todo">To Do List Application</Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              {" "}
+              <Link to="/employee">Employee Management Application</Link>
+            </MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
     </Box>

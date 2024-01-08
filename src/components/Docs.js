@@ -20,3 +20,11 @@ export default function Docs() {
 //npm install @fontsource/roboto  (this is for custom fonts)
 
 //https://jsonplaceholder.typicode.com/  (for API Calling)
+
+//npm install axios   (This if for third party library )
+
+//npm install @mui/x-data-grid  (foar grid data )
+
+//https://styled-components.com/docs/api#helpers  (for styled)
+
+//https://marmelab.com/react-admin/Tutorial.html (dummy admin pannel)
