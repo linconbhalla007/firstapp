@@ -41,6 +41,7 @@ export default function Navigation() {
             <Route path="/api" element={<APICalling></APICalling>}></Route>
             <Route index element={<Home></Home>}></Route>
             <Route path="/signIn" element={<SignIn></SignIn>}></Route>
+
             <Route path="/myaccount" element={<MyAccount></MyAccount>}></Route>
             <Route
               path="/classComponent"

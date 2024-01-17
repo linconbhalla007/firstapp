@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Checkbox,
   List,
@@ -6,12 +7,21 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  TextField,
+  Typography,
 } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import CheckIcon from "@mui/icons-material/Check";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
+import axios from "axios";
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -37,11 +47,31 @@ const columns = [
   },
 ];
 
+// {
+//   field: "button",
+//   headerName: "Button",
+//   width: 110,
+//   editable: true,
+//   renderCell: (items) => (
+//     <button onClick={handleDelete(items.row.id)}> delete</button>
+//   ),
+// },
+
+// const handleDelete = (id) => {
+//   console.log("ID is: " + id);
+// };
+
 export default function TODOList() {
   const [inputValue, setInputValue] = useState("");
   const [inputDescription, setinputDescription] = useState("");
   const [items, setItems] = useState([]);
   const [liveData, setLiveData] = useState([]);
+  const [open, setOpen] = React.useState(false);
+  const [rowData, setRowData] = useState("");
+  const [updateText, setRowupdateText] = useState("");
+  const [updateDescription, setupdateDescription] = useState("");
+  const [updateStatus, setupdateStatus] = useState("");
+
   //const classes = useStyles();
 
   const handleInputChange = (e) => {
@@ -54,7 +84,56 @@ export default function TODOList() {
     console.log("Inside handle change event  ");
   };
 
-  const fetchData = async () => {
+  const handleClickOpen = (rowData) => {
+    console.log("row Data:" + rowData.row.text);
+    setRowData(rowData.row);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const updateTextData = (event) => {
+    setRowupdateText(event.target.value);
+  };
+
+  const updateeDesc = (event) => {
+    setupdateDescription(event.target.value);
+  };
+
+  const updatetesStatus = (event) => {
+    setupdateStatus(event.target.value);
+  };
+
+  const handleUpdateToDo = async () => {
+    const id = rowData.id;
+    console.log("---ID----" + id);
+    try {
+      const respone = await fetch("http://localhost:8080/toDO/" + id, {
+        method: "PUT",
+        body: JSON.stringify({
+          uid: "----",
+          text: updateText,
+          description: updateDescription,
+          isPending: updateStatus,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (!respone.ok) {
+        throw new Error("Server Error !!! please try again");
+      }
+      getData();
+      setOpen(false);
+    } catch (error) {
+      console.log("Error---" + error.message);
+    } finally {
+    }
+  };
+
+  const addToDo = async () => {
     try {
       const respone = await fetch("http://localhost:8080/toDO", {
         method: "POST",
@@ -100,29 +179,13 @@ export default function TODOList() {
     getData();
   }, []);
 
-  // const handleAddItems = () => {
-  //   if (inputValue.trim() !== "eeee") {
-  //     console.log("Inside If ");
-  //     setItems([
-  //       ...items,
-  //       {
-  //         id: Date.now(),
-  //         text: inputValue,
-  //         description: inputDescription,
-  //         isPending: true,
-  //       },
-  //     ]);
-  //   }
-
-  //   fetchData();
-  //   console.log("Out Side If ");
-  //   setInputValue("");
-  // };
-
-  const handleDeleteItem = (itemId) => {
-    console.log("Item IS---" + itemId);
-    const updateItems = items.filter((item) => item.id !== itemId);
-    setItems(updateItems);
+  const handleDeleteItem = async () => {
+    const id = rowData.id;
+    try {
+      const respone = await axios.delete("http://localhost:8080/toDO/" + id);
+      getData();
+      setOpen(false);
+    } catch (error) {}
   };
 
   return (
@@ -147,19 +210,11 @@ export default function TODOList() {
           />
           <button
             style={{ marginLeft: "10px", marginBottom: "10px" }}
-            onClick={fetchData}
+            onClick={addToDo}
           >
             Add Item
           </button>
         </div>
-        {/* <ul>
-          {items.map((item) => (
-            <li key={item.id}>
-              <span>{item.text}</span>
-              <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
-            </li>
-          ))}
-        </ul> */}
 
         <Box sx={{ height: "100%", width: "100%" }}>
           <h1>This Is Post List </h1>
@@ -175,27 +230,59 @@ export default function TODOList() {
             }}
             checkboxSelection
             disableRowSelectionOnClick
+            onRowClick={handleClickOpen}
           />
         </Box>
 
-        {/* <List sx={{ width: "100%", maxWidth: 360, bgcolor: "InfoBackground" }}>
-          {items.map((value) => {
-            const labelId = `checkbox-list-label-${value.id}`;
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>To DO Update</DialogTitle>
+          <DialogContent>
+            <DialogContentText>Update Selected To Do Items</DialogContentText>
 
-            return (
-              <ListItem key={value.id} disablePadding>
-                <ListItemButton role={undefined} dense>
-                  <ListItemText id={labelId}>
-                    {"List Item" + value.text}
-                  </ListItemText>
-                  <Button onClick={() => handleDeleteItem(value.id)}>
-                    Delete
-                  </Button>
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List> */}
+            <Typography>Id : {rowData.id} </Typography>
+
+            <TextField
+              margin="dense"
+              id="name"
+              name="Text"
+              label="Title or Content"
+              type="text"
+              onChange={updateTextData}
+              defaultValue={rowData.text}
+              fullWidth
+              variant="standard"
+            />
+
+            <TextField
+              margin="dense"
+              id="name"
+              name="Description"
+              label="Description"
+              type="text"
+              onChange={updateeDesc}
+              defaultValue={rowData.description}
+              fullWidth
+              variant="standard"
+            />
+
+            <TextField
+              margin="dense"
+              id="status"
+              name="Status"
+              label="Status"
+              type="text"
+              defaultValue={rowData.isPending}
+              fullWidth
+              onChange={updatetesStatus}
+              variant="standard"
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleUpdateToDo}>Update</Button>
+            <Button onClick={handleDeleteItem}>Delete</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </>
   );

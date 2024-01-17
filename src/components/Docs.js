@@ -28,3 +28,7 @@ export default function Docs() {
 //https://styled-components.com/docs/api#helpers  (for styled)
 
 //https://marmelab.com/react-admin/Tutorial.html (dummy admin pannel)
+
+//npm install redux react-redux  (for redux)
+
+//https://codesandbox.io/p/sandbox/old-monad-p65r7l

@@ -17,6 +17,7 @@ import { Outlet, Link } from "react-router-dom";
 export default function MyAppBar(props) {
   const [auth, setAuth] = React.useState("" + props.loginStatus);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [logInIcon, setlogInIcon] = React.useState(null);
   console.log("LOGIN STATUS- PROPSSS----" + auth);
 
   //   React.useEffect(() => {
@@ -31,8 +32,17 @@ export default function MyAppBar(props) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleMenuLogout = (event) => {
+    setlogInIcon(event.currentTarget);
+  };
+
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleCloseLogin = () => {
+    setlogInIcon(null);
+    localStorage.setItem("login", "done1111");
   };
 
   return (
@@ -72,6 +82,7 @@ export default function MyAppBar(props) {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 color="inherit"
+                onClick={handleMenuLogout}
               >
                 <AccountCircle />
               </IconButton>
@@ -96,7 +107,7 @@ export default function MyAppBar(props) {
             onClose={handleClose}
           >
             {auth === "done" ? (
-              <></>
+              <> </>
             ) : (
               <MenuItem onClick={handleClose}>
                 <Link to="/signIn">SignIn</Link>
@@ -125,6 +136,26 @@ export default function MyAppBar(props) {
             <MenuItem onClick={handleClose}>
               {" "}
               <Link to="/employee">Employee Management Application</Link>
+            </MenuItem>
+          </Menu>
+
+          <Menu
+            id="menu-appbar"
+            anchorEl={logInIcon}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(logInIcon)}
+            onClose={handleCloseLogin}
+          >
+            <MenuItem onClick={handleCloseLogin}>
+              <Link to="/signIn">Logout</Link>
             </MenuItem>
           </Menu>
         </Toolbar>
