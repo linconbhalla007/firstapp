@@ -137,6 +137,15 @@ export default function MyAppBar(props) {
               {" "}
               <Link to="/employee">Employee Management Application</Link>
             </MenuItem>
+            <MenuItem onClick={handleClose}>
+              {" "}
+              <Link to="/counterRedux">Counter Redux Example</Link>
+            </MenuItem>
+
+            <MenuItem onClick={handleClose}>
+              {" "}
+              <Link to="/contextExample">Use Context Example</Link>
+            </MenuItem>
           </Menu>
 
           <Menu

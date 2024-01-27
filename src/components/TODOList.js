@@ -71,6 +71,7 @@ export default function TODOList() {
   const [updateText, setRowupdateText] = useState("");
   const [updateDescription, setupdateDescription] = useState("");
   const [updateStatus, setupdateStatus] = useState("");
+  const [selectRow, setSelectRow] = useState([]);
 
   //const classes = useStyles();
 
@@ -188,6 +189,26 @@ export default function TODOList() {
     } catch (error) {}
   };
 
+  const handleRowClick = (params) => {
+    setSelectRow(params);
+    console.log("SELECTD ROW---" + selectRow);
+  };
+
+  const handleDeleteAllRow = async () => {
+    //http://localhost:8080/toDO/multiple?ids=1,2,3,4,5
+    console.log("ONCLIKKKKK--" + selectRow);
+    console.log("http://localhost:8080/toDO/multiple?ids=" + selectRow);
+
+    try {
+      const respone = await axios.delete(
+        "http://localhost:8080/toDO/multiple?ids=" + selectRow
+      );
+      getData();
+    } catch (error) {
+      console.log("ERROR----" + error.message);
+    }
+  };
+
   return (
     <>
       <div>
@@ -230,8 +251,11 @@ export default function TODOList() {
             }}
             checkboxSelection
             disableRowSelectionOnClick
+            onRowSelectionModelChange={handleRowClick}
             onRowClick={handleClickOpen}
+            selectionModel={selectRow}
           />
+          <Button onClick={handleDeleteAllRow}> Delete Multiple </Button>
         </Box>
 
         <Dialog open={open} onClose={handleClose}>
