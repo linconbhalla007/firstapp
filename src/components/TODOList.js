@@ -22,6 +22,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { DataGrid } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import axios from "axios";
+import { todoService } from "../service/ToDoServices";
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -107,31 +108,16 @@ export default function TODOList() {
   };
 
   const handleUpdateToDo = async () => {
-    const id = rowData.id;
-    console.log("---ID----" + id);
     try {
-      const respone = await fetch("http://localhost:8080/toDO/" + id, {
-        method: "PUT",
-        body: JSON.stringify({
-          uid: "----",
-          text: updateText,
-          description: updateDescription,
-          isPending: updateStatus,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
+      const result = await todoService.updateToDo(rowData.id, {
+        uid: "----",
+        text: updateText,
+        description: updateDescription,
+        isPending: updateStatus,
       });
-
-      if (!respone.ok) {
-        throw new Error("Server Error !!! please try again");
-      }
       getData();
       setOpen(false);
-    } catch (error) {
-      console.log("Error---" + error.message);
-    } finally {
-    }
+    } catch (error) {}
   };
 
   const addToDo = async () => {
@@ -163,17 +149,9 @@ export default function TODOList() {
 
   const getData = async () => {
     try {
-      const respone = await fetch("http://localhost:8080/toDO");
-
-      if (!respone.ok) {
-        throw new Error("Server Error !!! please try again");
-      }
-      const result = await respone.json();
-      setLiveData(result);
-    } catch (error) {
-      console.log("Error---" + error.message);
-    } finally {
-    }
+      const respone = await todoService.getAll();
+      setLiveData(respone);
+    } catch (error) {}
   };
 
   useEffect(() => {
